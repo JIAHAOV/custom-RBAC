@@ -36,7 +36,7 @@ public class TestHandler {
     public String admin() {
         return "admin";
     }
-    @HasRole("user")
+    @HasRole({"user", "admin"})
     @GetMapping("user")
     public String user() {
         return "user";

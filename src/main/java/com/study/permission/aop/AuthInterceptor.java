@@ -44,7 +44,7 @@ public class AuthInterceptor {
         // 目标方法名
         String methodName = signature.getName();
         // 获取value的值
-        String value = annotation.value();
+        String[] value = annotation.value();
         User user = UserHolder.getUser();
         if (user == null) {
             throw new AuthenticationException(ErrorCode.NOT_LOGIN);
@@ -52,12 +52,13 @@ public class AuthInterceptor {
         Long userId = user.getUserId();
         // 获取角色
         List<String> roles = permissionInterceptor.getRoleList(userId);
-        if (!roles.contains(value)) {
-            // 权限不足
-            log.warn("用户 {} 操作方法 {} 失败", userId, methodName);
-            throw new AuthenticationException(ErrorCode.NO_AUTH);
+        for (String role : value) {
+            if (roles.contains(role)) {
+                // 拥有权限，正常执行
+                return pjp.proceed();
+            }
         }
-        // 永有权限，正常执行
-        return pjp.proceed();
+        log.warn("用户 {} 操作方法 {} 失败", userId, methodName);
+        throw new AuthenticationException(ErrorCode.NO_AUTH);
     }
 }

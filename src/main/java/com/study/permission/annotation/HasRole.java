@@ -14,5 +14,5 @@ public @interface HasRole {
     /**
      * 拥有权限操作的角色
      */
-    String value() default "";
+    String[] value() default {};
 }
