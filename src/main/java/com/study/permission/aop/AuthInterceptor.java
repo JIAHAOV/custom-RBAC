@@ -4,7 +4,7 @@ import com.study.permission.annotation.HasRole;
 import com.study.permission.common.ErrorCode;
 import com.study.permission.domain.User;
 import com.study.permission.exception.AuthenticationException;
-import com.study.permission.intercepter.PermissionInterceptor;
+import com.study.permission.auth.PermissionInterceptor;
 import com.study.permission.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -57,7 +57,7 @@ public class AuthInterceptor {
             log.warn("用户 {} 操作方法 {} 失败", userId, methodName);
             throw new AuthenticationException(ErrorCode.NO_AUTH);
         }
-        // 永远权限，正常执行
+        // 永有权限，正常执行
         return pjp.proceed();
     }
 }

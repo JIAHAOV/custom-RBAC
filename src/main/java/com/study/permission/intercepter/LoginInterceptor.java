@@ -10,10 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.study.permission.constants.UserConstants.SESSION_KEY;
+
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Object userInfo = request.getSession().getAttribute("userInfo");
+        Object userInfo = request.getSession().getAttribute(SESSION_KEY);
         if (userInfo == null) {
             throw new AuthenticationException(ErrorCode.NOT_LOGIN);
         }

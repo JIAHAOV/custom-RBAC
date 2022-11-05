@@ -1,4 +1,4 @@
-package com.study.permission.intercepter;
+package com.study.permission.auth;
 
 import com.study.permission.domain.Role;
 import com.study.permission.mapper.UserRoleRelationMapper;
