@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.permission.mapper.UserRoleRelationMapper">
+
+    <resultMap id="BaseResultMap" type="com.study.permission.domain.UserRoleRelation">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="relationId" column="relation_id" jdbcType="BIGINT"/>
+            <result property="roleId" column="role_id" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,relation_id,role_id,
+        create_time,update_time,deleted
+    </sql>
+    <select id="selectRoleByUserId" resultType="com.study.permission.domain.Role">
+        SELECT b.role_id,b.role_name FROM auth_user_role_relation a
+        LEFT JOIN auth_role b
+        ON a.role_id = b.role_id
+        WHERE a.user_id = #{userId}
+        AND a.deleted = 0
+    </select>
+
+</mapper>
